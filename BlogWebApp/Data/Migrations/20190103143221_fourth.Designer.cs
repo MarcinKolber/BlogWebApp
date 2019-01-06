@@ -4,14 +4,16 @@ using BlogWebApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BlogWebApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190103143221_fourth")]
+    partial class fourth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,48 +73,6 @@ namespace BlogWebApp.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("BlogWebApp.Models.Comment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AuthorId");
-
-                    b.Property<string>("Content");
-
-                    b.Property<DateTime>("DateTime");
-
-                    b.Property<int?>("PostId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuthorId");
-
-                    b.HasIndex("PostId");
-
-                    b.ToTable("Comment");
-                });
-
-            modelBuilder.Entity("BlogWebApp.Models.Post", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AuthorId");
-
-                    b.Property<string>("Content");
-
-                    b.Property<DateTime>("DateTime");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuthorId");
-
-                    b.ToTable("Post");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -227,24 +187,6 @@ namespace BlogWebApp.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("BlogWebApp.Models.Comment", b =>
-                {
-                    b.HasOne("BlogWebApp.Models.ApplicationUser", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorId");
-
-                    b.HasOne("BlogWebApp.Models.Post", "Post")
-                        .WithMany("Comments")
-                        .HasForeignKey("PostId");
-                });
-
-            modelBuilder.Entity("BlogWebApp.Models.Post", b =>
-                {
-                    b.HasOne("BlogWebApp.Models.ApplicationUser", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

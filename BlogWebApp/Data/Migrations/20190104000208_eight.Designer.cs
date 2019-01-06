@@ -4,14 +4,16 @@ using BlogWebApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BlogWebApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190104000208_eight")]
+    partial class eight
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,9 +85,7 @@ namespace BlogWebApp.Data.Migrations
 
                     b.Property<string>("Content");
 
-                    b.Property<DateTime>("DateTime");
-
-                    b.Property<int?>("PostId");
+                    b.Property<int>("PostId");
 
                     b.HasKey("Id");
 
@@ -235,9 +235,10 @@ namespace BlogWebApp.Data.Migrations
                         .WithMany()
                         .HasForeignKey("AuthorId");
 
-                    b.HasOne("BlogWebApp.Models.Post", "Post")
-                        .WithMany("Comments")
-                        .HasForeignKey("PostId");
+                    b.HasOne("BlogWebApp.Models.Post", "commentedPost")
+                        .WithMany()
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("BlogWebApp.Models.Post", b =>

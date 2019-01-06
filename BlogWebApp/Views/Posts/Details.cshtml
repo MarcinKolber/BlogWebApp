@@ -1,0 +1,86 @@
+﻿@model BlogWebApp.Models.PostViewModel
+
+<h2>Detailed view of the post</h2>
+<div class="post-view">
+    <dl class="dl-horizontal">
+        <dt>
+            Author
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Post.Author.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Post.DateTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Post.DateTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Post.Content)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Post.Content)
+        </dd>
+    </dl>
+
+</div>
+<div class="row add-comment">
+    <div class="col-md-4">
+        <form asp-action="AddComment">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input asp-for="PostId" type="hidden" value="@Model.Post.Id" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="CommentContent" class="control-label">Add comment</label>
+                <input asp-for="CommentContent" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@foreach (var comment in Model.Comments)
+{
+    <div class="comments-container">
+
+        <div class="creation-time">
+            <p class="first-element">
+                @Html.DisplayNameFor(modelItem => comment.DateTime)
+            </p>
+            <p class="second-element">
+                @Html.DisplayFor(modelItem => comment.DateTime)
+            </p>
+        </div>
+        <div class="creation-time">
+            <p class="first-element">
+                @Html.DisplayNameFor(model => comment.AuthorId)
+            </p>
+            <p class="second-element">
+                @Html.DisplayFor(modelItem => comment.Author.Email)
+            </p>
+        </div>
+        <div class="comment-content">
+            <p>
+                @Html.DisplayFor(modelItem => comment.Content)
+            </p>
+        </div>
+
+    </div>
+
+}
+
+
+
+
+
+    <div class="bottom-buttons">
+        <a asp-action="Index">Back to List</a>   |    
+        <a asp-action="Index" asp-controller="Home">Back to the Main page</a>
+
+    </div>

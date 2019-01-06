@@ -1,0 +1,63 @@
+﻿@model PostViewModel
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+<div class="post-area">
+    <hr />
+
+    <dl class="dl-horizontal">
+        <dt>
+            Author
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Post.Author.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Post.DateTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Post.DateTime)
+        </dd>
+    </dl>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Content
+        </dt>
+        <dd>
+            <p>@Html.DisplayFor(model => model.Post.Content)</p>
+        </dd>
+    </dl>
+
+
+    <hr />
+    @if (User.IsInRole("Customer") || User.IsInRole("Admin"))
+    {
+        <div class="row add-comment">
+            <div class="col-md-4">
+                <form asp-action="AddComment" asp-controller="Posts">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <input asp-for="PostId" type="hidden" value="@Model.Post.Id" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CommentContent" class="control-label">Add comment</label>
+                        <input asp-for="CommentContent" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+
+    @{
+        var count = Model.Comments.Count();
+        <a asp-area="" asp-route-id="@Model.Post.Id" asp-controller="Posts" asp-action="Details">See all comments (@count)</a>
+
+    }
+
+</div>

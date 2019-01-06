@@ -1,0 +1,19 @@
+﻿@model Post
+
+<div id="post-in">
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create" asp-controller="Posts">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label>New post</label>
+                        <textarea placeholder="Start writing your post here!" asp-for="Content" class="form-control post-input"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
